@@ -1,4 +1,4 @@
-# :race_car: Startando aplicação
+# :thumbsup: Startando aplicação
 
 ## :hammer_and_wrench:  rode o comando para buildar o docker-compose:
 
