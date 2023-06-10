@@ -1,20 +1,24 @@
-# Define a imagem base
-FROM node:latest
+FROM node:18-alpine3.18 as builder
 
-# Define o diretório de trabalho no contêiner
+# Definindo o diretório de trabalho da aplicação
 WORKDIR /app
 
-# Copia os arquivos do projeto para o contêiner
-COPY package.json package-lock.json ./
-
-# Instala as dependências, incluindo as devDependencies
-RUN npm install 
-
-# Copia todos os arquivos do projeto para o contêiner
+# Copiando todos os arquivos do repositório para o diretório de trabalho
 COPY . .
 
-# Expõe a porta do aplicativo (se necessário)
-EXPOSE 3000
+# Instalando as dependências
+RUN yarn install
 
-# Define o comando padrão para executar o aplicativo
-CMD ["npm", "run", "dev"]
+# Realizando o build da aplicação
+RUN yarn build
+
+FROM nginx:alpine
+
+# Copiando a pasta resultante do build para o diretório do NGINX
+COPY ./dist /usr/share/nginx/html
+
+# Expondo a porta 8080 para acesso externo
+EXPOSE 8080
+
+
+# a imagem ta dividida em stages

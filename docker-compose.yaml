@@ -1,10 +1,11 @@
-version: '3'
+version: '3.8'
 services:
   app:
+    container_name: vue-vite-app
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 8080:3000
     volumes:
       - .:/app
+    ports:
+      - 8080:80
