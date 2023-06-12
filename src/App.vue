@@ -7,9 +7,9 @@
       <div class="profile">
         <img src="https://avatars.githubusercontent.com/u/102547689?v=4" alt="Foto de perfil" class="profile-pic" />
         <div class="profile-details">
-          <h2 class="name">Pedro Ryago</h2>
-          <p class="age">20 anos</p>
-          <p class="degree">Engenharia de Software - 6º semestre</p>
+          <h2 class="name">{{ profile.name }}</h2>
+          <p class="age">{{ profile.age }} anos</p>
+          <p class="degree">{{ profile.course }}</p>
         </div>
       </div>
       <div class="skills">
@@ -34,6 +34,32 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      profile: {}
+    };
+  },
+  mounted() {
+    this.fetchProfile();
+  },
+  methods: {
+    fetchProfile() {
+      // Fazer a solicitação HTTP para a API
+      fetch('http://localhost:8000/api.php')
+        .then(response => response.json())
+        .then(data => {
+          this.profile = data;
+        })
+        .catch(error => {
+          console.error('Ocorreu um erro:', error);
+        });
+    }
+  }
+};
+</script>
 
 <style>
 .portfolio {

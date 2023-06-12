@@ -15,7 +15,7 @@ RUN yarn build
 FROM nginx:alpine
 
 # Copiando a pasta resultante do build para o diretório do NGINX
-COPY ./dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expondo a porta 8080 para acesso externo
 EXPOSE 8080
